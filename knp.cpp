@@ -1,3 +1,15 @@
+/*
+ *  knp.cpp
+ *
+ *  Created on: 2014年11月10日
+ *  Author:     zhiqiu 
+ *  From the School of Mobile Information Engineering, SUN YAT-SEN UNIVERSITY.
+ */
+// this is source code for project of class Introduction to Embedded System
+// a sngple demo of KNP network
+// five channel, four process, block read, non-block write
+// h1->f,h0->f,f->g,g->h0.g->h1
+
 #include <iostream>
 #include <deque>
 using namespace std;
