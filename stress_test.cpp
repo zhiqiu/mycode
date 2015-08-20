@@ -1,4 +1,14 @@
-// usage : ./a.out 192.168.1.108 8080 1000
+/* Filename: stress_test.cpp
+ * Version : v1.0
+ * CreateTime: 2015.8.18
+ * Author: zhiqiu
+ */
+
+//  description: a test program for the stress test.  from "linux high performance programing" book
+//  compile: g++
+//  usage :  ./a.out 192.168.1.108 8080 1000
+//  input:   none
+//  output:  test result
 
 #include <stdlib.h>
 #include <stdio.h>
