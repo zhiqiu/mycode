@@ -1,0 +1,7 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+soj.sysu.edu.cn	FALSE	/	FALSE		PHPSESSID	q6ujkviqjnn9cdr30qh5cugce6
+soj.sysu.edu.cn	FALSE	/	FALSE	1446813450	hash	d60cc9cad5c79cb223f849c60af3e15b
+soj.sysu.edu.cn	FALSE	/	FALSE	1446813450	uid	56313
