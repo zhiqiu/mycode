@@ -1,3 +1,4 @@
+# send infinite data to server
 import cookielib, urllib2, urllib, re, random
 def get_name(_input):
     temp = _input.split()
