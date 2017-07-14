@@ -1,12 +1,11 @@
-#!/usr/bin/python3
-#-*- coding:utf-8 -*-
 import json
 import os
 import io, base64
 import urllib.request
 from PIL import Image
+import datetime
 
-def data_parser(keyword):
+def data_parser(keyword, conn, table):
     with open(keyword + '.json', 'r') as input:
         images = json.load(input)
     if not os.path.exists(keyword):
@@ -17,7 +16,20 @@ def data_parser(keyword):
             return
         
     for idx, image in enumerate(images):
-        if image['url']:
+        if image['href'] and image['url']:
+            #check if exist
+            cursor = conn.cursor()
+            sql = 'select * from %s where href=\'%s\';'%(table, image['href'])
+            cursor.execute(sql)
+            res = cursor.fetchall()
+            
+            if len(res) != 0:
+                print(res)
+                print('%s exists'% image['href'])
+                continue
+
+            #conn.commit()
+            #
             data_url = image['url'].split(',')
             if len(data_url) > 1:
                 im = Image.open(io.BytesIO(base64.b64decode(data_url[1])))
@@ -27,11 +39,20 @@ def data_parser(keyword):
                 except:
                     continue
             
+            path = keyword + "/image_" + str(idx) +".jpg"
             try:
-                im.convert('RGB').save(keyword + "/image_" + str(idx) +  ".jpg")
+                im.convert('RGB').save(path)
             except:
                 print('Save Image Error')
                 continue
+            
+            sql2 = 'insert into %s '%table + '(href,path,word,time) values(%s, %s, %s, %s)' 
+            param = (image['href'], path, keyword, datetime.datetime.now())
+            cursor.execute(sql2, param)
+            cursor.close()
+            conn.commit()
+        else:
+            print('%d in %s missing'%(idx, keyword))
 
 def main(argv):
     filename = argv[1]

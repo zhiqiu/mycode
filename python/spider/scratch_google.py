@@ -1,11 +1,9 @@
-#!/usr/bin/python3
-#-*- coding:utf-8 -*-
-
 from selenium import webdriver
 import time
 import json
 from data_parser import *
 import sys
+import pymysql
 
 def search_keyword(keyword):
     search_url = 'https://www.google.com/search?biw=1920&bih=974&tbm=isch&sa=1&q=' + keyword.replace(' ', '+')
@@ -13,13 +11,13 @@ def search_keyword(keyword):
     driver = webdriver.Firefox()
     #driver = webdriver.PhantomJS()
     driver.get(search_url)
-    time.sleep(0.5)
+    time.sleep(1)
     for i in range(100):
         try:
             driver.execute_script('window.scrollTo(0,document.body.scrollHeight)')
             button = driver.find_element_by_css_selector("input#smb.ksb._kvc[value$='Show more results']");
             button.click()
-            time.sleep(0.5)
+            time.sleep(1)
         except:
            continue
         
@@ -45,15 +43,40 @@ def search_keyword(keyword):
         f.write(json.dumps(res))
         
     driver.quit()
-        
+
+
+def create_table(conn, table):
+    #connect to db
+    #conn = pymysql.connect(host = '127.0.0.1', user = 'beijing', passwd = 'beijing2022', db = 'image')
+    cursor = conn.cursor()
+
+    cursor.execute("drop table if exists %s" %table)
+
+    sql ="""create table %s (
+        id int auto_increment primary key,
+        href varchar(10000) not null,
+        path varchar(1000) not null,  
+        word varchar(100),
+        time varchar(100)
+        )""" %table
+    cursor.execute(sql)
+    conn.commit()
+
 def main(argv):
+    conn = pymysql.connect(host = '127.0.0.1', user = 'beijing', passwd = 'beijing2022', db = 'image')
+    table='test'
+    create_table(conn, table)
+
+
     filename = argv[1]
     keywords = [ line.strip() for line in open(filename, 'r')]
     print(keywords)
     for keyword in keywords:
         print(keyword)
         search_keyword(keyword)
-        data_parser(keyword)
+        data_parser(keyword, conn, table)
+    
+    conn.close()
 
 
 if __name__=='__main__':

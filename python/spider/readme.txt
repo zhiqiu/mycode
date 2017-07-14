@@ -1,10 +1,12 @@
+1.using python3 
+2.pip3 install selenium
 
-1.	using python3
-2.	pip3 install selenium
+3.install geckodriver
 
+4.install mysql
+5.create mysql: user,database, table
 
-2.	download geckodriver
-	Copy geckodriver in /usr/local/bin
-
+6.pip3 install pymysql
+ (for python2.7, mysqldb, instead)
 
 
