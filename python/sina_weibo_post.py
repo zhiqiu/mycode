@@ -1,4 +1,7 @@
 #-*-coding:utf-8-*-
+"""
+测试使用新浪微博api发送一条微博
+"""
 import weibo  #导入weibo的库
 
 APP_KEY = 'XXXXXXXXXX'
