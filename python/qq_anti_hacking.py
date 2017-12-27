@@ -1,3 +1,9 @@
+"""
+盗号者发送垃圾伪装成qq登录的界面
+偷取用户输入的账号信息
+==向该页面发送无限的垃圾信息，挤爆数据库
+"""
+
 # send infinite data to server
 import cookielib, urllib2, urllib, re, random
 def get_name(_input):
